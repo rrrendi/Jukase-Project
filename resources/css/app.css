@@ -1,0 +1,6 @@
+@import './jukase.css';
+
+/* Jukase Project design system (semua komponen UI storefront & admin) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
