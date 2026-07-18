@@ -29,7 +29,7 @@ class WhatsAppService
     {
         $ownerWa = Configuration::get('owner_whatsapp');
 
-        if (! $ownerWa) {
+        if (!$ownerWa) {
             return false;
         }
 
@@ -94,7 +94,7 @@ class WhatsAppService
         $token = Configuration::get('fonnte_token');
         $active = Configuration::get('notif_active', '1');
 
-        if (! $token || $active !== '1') {
+        if (!$token || $active !== '1') {
             NotificationLog::create([
                 'type' => $type,
                 'recipient' => $recipient,
@@ -116,7 +116,10 @@ class WhatsAppService
                     'message' => $message,
                 ]);
 
-            $success = $response->successful();
+            // Fonnte tetap balas HTTP 200 walau gagal secara logis (mis. device
+            // terputus/banned) — status sukses/gagal yang sebenarnya ada di field
+            // "status" pada body JSON, bukan cuma dari kode HTTP.
+            $success = $response->successful() && (bool) ($response->json('status') ?? false);
 
             NotificationLog::create([
                 'type' => $type,
@@ -129,7 +132,7 @@ class WhatsAppService
 
             return $success;
         } catch (\Throwable $e) {
-            Log::warning('Gagal mengirim notifikasi WhatsApp Fonnte: '.$e->getMessage());
+            Log::warning('Gagal mengirim notifikasi WhatsApp Fonnte: ' . $e->getMessage());
 
             NotificationLog::create([
                 'type' => $type,
@@ -153,7 +156,7 @@ class WhatsAppService
         $phone = preg_replace('/[^0-9]/', '', $phone);
 
         if (str_starts_with($phone, '0')) {
-            $phone = '62'.substr($phone, 1);
+            $phone = '62' . substr($phone, 1);
         }
 
         return $phone;

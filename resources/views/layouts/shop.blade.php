@@ -15,7 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="jk">
+<body class="jk shop-body">
 
     <header class="shop-header">
         <div class="bar">
@@ -25,8 +25,15 @@
             <nav class="shop-nav">
                 <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Katalog</a>
                 <a href="{{ route('home') }}#cara-pesan">Cara Pesan</a>
+                <a href="{{ route('order-tracking.index') }}"
+                    class="{{ request()->routeIs('order-tracking.*') ? 'active' : '' }}">Lacak Pesanan</a>
             </nav>
             <div class="header-spacer"></div>
+            <button type="button" class="icon-btn nav-toggle" onclick="jkToggleMenu()" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+            </button>
             <a href="{{ route('cart.index') }}" class="icon-btn" title="Keranjang">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M6 6h15l-1.5 9h-12z" />
@@ -39,6 +46,12 @@
                     <span class="cart-count">{{ $cartCount }}</span>
                 @endif
             </a>
+        </div>
+        <div id="jk-mobile-menu" class="jk-mobile-menu">
+            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Katalog</a>
+            <a href="{{ route('home') }}#cara-pesan">Cara Pesan</a>
+            <a href="{{ route('order-tracking.index') }}"
+                class="{{ request()->routeIs('order-tracking.*') ? 'active' : '' }}">Lacak Pesanan</a>
         </div>
     </header>
 
@@ -56,7 +69,7 @@
                         window.jkToast('error', @json($error));
                     @endforeach
                 @endif
-                    });
+                                });
         </script>
     @endif
 
@@ -71,7 +84,7 @@
                 Jukase Project
             </div>
             <div>Jl. Raya Taman Kopo Indah 2 No.12, Sayati, Margahayu, Kab. Bandung</div>
-            <div class="mono">© {{ date('Y') }} Jukase Project</div>
+            <div class="mono">© {{ date('Y') }} Jukase Project By Fijia</div>
         </div>
     </footer>
 

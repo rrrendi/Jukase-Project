@@ -45,7 +45,7 @@
                     <div class="cellname">{{ $order->customer_name }}</div>
                     <div class="cellsub mono">{{ $order->whatsapp }}</div>
                 </td>
-                <td class="cellsub" style="max-width:220px">{{ $order->items_summary }}</td>
+                <td class="cellsub col-item">{{ $order->items_summary }}</td>
                 <td>{{ \App\Support\Format::rupiah($order->total) }}</td>
                 <td>
                     @if ($order->payment_proof_url)
@@ -60,6 +60,12 @@
                 <td>
                     @if ($status === 'pending')
                         <div style="display:flex;gap:6px;flex-wrap:wrap">
+                            <a href="{{ route('admin.orders.show', $order) }}" class="btn btn-ghost btn-sm" title="Lihat detail pesanan" aria-label="Detail pesanan {{ $order->order_code }}">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </a>
                             <form method="POST" action="{{ route('admin.orders.approve', $order) }}" class="inline-form"
                                   onsubmit="return confirm('Setujui pesanan {{ $order->order_code }}? Stok produk akan berkurang & notifikasi WhatsApp akan dikirim ke pelanggan.')">
                                 @csrf

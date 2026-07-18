@@ -54,20 +54,23 @@
             <form method="POST" action="{{ route('admin.manual-sales.store') }}">
                 @csrf
 
-                <div class="field">
+                <div class="field jk-combobox" id="product-combobox">
                     <label>Produk <span class="req">*</span></label>
-                    <select name="product_id" id="product_id" required
-                            onchange="document.getElementById('price').value = this.options[this.selectedIndex].dataset.price ?? ''; document.getElementById('quantity').max = this.options[this.selectedIndex].dataset.stock ?? 1">
-                        <option value="">-- Pilih Produk --</option>
+                    <input type="text" class="combobox-input" placeholder="Ketik merek/model untuk mencari…"
+                        autocomplete="off"
+                        value="{{ old('product_id') ? ($products->firstWhere('id', (int) old('product_id'))->full_name ?? '') : '' }}">
+                    <input type="hidden" name="product_id" id="product_id" value="{{ old('product_id') }}">
+                    <div class="combobox-panel">
                         @foreach ($products as $product)
-                            <option value="{{ $product->id }}"
-                                    data-price="{{ (int) $product->price }}"
-                                    data-stock="{{ $product->stock }}"
-                                    {{ old('product_id') == $product->id ? 'selected' : '' }}>
-                                {{ $product->full_name }} — Stok: {{ $product->stock }}
-                            </option>
+                            <div class="combobox-option" data-id="{{ $product->id }}"
+                                data-label="{{ $product->full_name }}"
+                                data-price="{{ (int) $product->price }}"
+                                data-stock="{{ $product->stock }}">
+                                <div class="cb-name">{{ $product->full_name }}</div>
+                                <div class="cb-sub">Stok: {{ $product->stock }} · {{ \App\Support\Format::rupiah($product->price) }}</div>
+                            </div>
                         @endforeach
-                    </select>
+                    </div>
                     @error('product_id') <span class="error-text">{{ $message }}</span> @enderror
                 </div>
 
@@ -109,6 +112,13 @@
 
                 <button type="submit" class="btn btn-volt btn-block">Simpan Penjualan</button>
             </form>
+
+            <script>
+                document.getElementById('product-combobox')?.addEventListener('combobox:select', function (e) {
+                    document.getElementById('price').value = e.detail.price ?? '';
+                    document.getElementById('quantity').max = e.detail.stock ?? 1;
+                });
+            </script>
         </div>
     </div>
 </div>

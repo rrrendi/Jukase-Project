@@ -10,6 +10,23 @@
 
 @section('content')
 
+{{-- Satu <form> tersembunyi per foto galeri, untuk aksi hapus foto (DELETE).
+     Ini SENGAJA diletakkan di luar & sebelum <form> utama di bawah, karena HTML
+     tidak mengizinkan <form> bersarang di dalam <form> lain (kalau dipaksakan,
+     browser akan menutup form terluar lebih awal - tombol "Simpan Perubahan"
+     jadi tidak bereaksi sama sekali).
+     Tombol hapus di galeri (di dalam admin.products._form) tetap bisa tampil
+     persis di posisi aslinya berkat atribut HTML `form="delete-photo-{id}"`,
+     yang menghubungkan tombol ke form ini walau taruh di tempat lain di DOM. --}}
+@foreach ($product->images as $img)
+    <form id="delete-photo-{{ $img->id }}" method="POST"
+          action="{{ route('admin.products.images.destroy', [$product, $img]) }}"
+          onsubmit="return confirm('Hapus foto ini?')" style="display:none">
+        @csrf
+        @method('DELETE')
+    </form>
+@endforeach
+
 <div class="panel" style="max-width:760px">
     <div class="panel-head">
         <div>

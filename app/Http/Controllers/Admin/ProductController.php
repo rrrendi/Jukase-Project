@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $products = Product::with('category')
+        $products = Product::with(['category', 'images'])
             ->when($request->filled('q'), function ($query) use ($request) {
                 $search = $request->input('q');
 
@@ -29,7 +29,7 @@ class ProductController extends Controller
                         ->orWhere('name', 'like', "%{$search}%");
                 });
             })
-            ->orderBy('brand')->orderBy('name')
+            ->latest()
             ->paginate(10)
             ->withQueryString();
 
@@ -51,10 +51,6 @@ class ProductController extends Controller
     {
         $validated = $this->validateData($request);
         $validated['is_active'] = $request->boolean('is_active');
-
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
-        }
 
         $galleryFiles = $request->file('images', []);
         unset($validated['images']);
@@ -78,13 +74,6 @@ class ProductController extends Controller
         $validated = $this->validateData($request, $product);
         $validated['is_active'] = $request->boolean('is_active');
 
-        if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $validated['image'] = $request->file('image')->store('products', 'public');
-        }
-
         $galleryFiles = $request->file('images', []);
         unset($validated['images']);
 
@@ -107,10 +96,6 @@ class ProductController extends Controller
 
         if ($hasHistory) {
             return back()->with('error', 'Produk "' . $product->full_name . '" tidak dapat dihapus karena sudah memiliki riwayat transaksi. Nonaktifkan saja produk ini.');
-        }
-
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
         }
 
         foreach ($product->images as $img) {
@@ -162,9 +147,8 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'size_range' => ['nullable', 'string', 'max:50'],
             'color' => ['nullable', 'string', 'max:100'],
-            'price' => ['required', 'numeric', 'min:0'],
+            'price' => ['required', 'numeric', 'min:0', 'max:9999999999.99'],
             'min_stock' => ['required', 'integer', 'min:0'],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'images' => ['nullable', 'array'],
             'images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ], [], [
@@ -175,8 +159,7 @@ class ProductController extends Controller
             'color' => 'Warna',
             'price' => 'Harga Jual',
             'min_stock' => 'Batas Stok Minimum',
-            'image' => 'Foto Produk',
-            'images' => 'Galeri Foto',
+            'images' => 'Foto Produk',
         ]);
     }
 }

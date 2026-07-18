@@ -89,12 +89,12 @@
                     <form method="POST" action="{{ route('admin.orders.approve', $order) }}" style="flex:1"
                           onsubmit="return confirm('Setujui pesanan {{ $order->order_code }}? Stok produk akan berkurang & notifikasi WhatsApp akan dikirim ke pelanggan.')">
                         @csrf
-                        <button type="submit" class="btn btn-volt btn-block">✅ Setujui</button>
+                        <button type="submit" class="btn btn-volt btn-block">Setujui</button>
                     </form>
                     <form method="POST" action="{{ route('admin.orders.reject', $order) }}" style="flex:1"
                           onsubmit="return confirm('Tolak pesanan {{ $order->order_code }}? Stok tidak akan berubah.')">
                         @csrf
-                        <button type="submit" class="btn btn-danger btn-block">❌ Tolak</button>
+                        <button type="submit" class="btn btn-danger btn-block">Tolak</button>
                     </form>
                 </div>
             </div>

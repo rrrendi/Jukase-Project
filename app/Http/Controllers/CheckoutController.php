@@ -8,6 +8,7 @@ use App\Services\WhatsAppService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Support\OrderDeviceMemory;
 
 class CheckoutController extends Controller
 {
@@ -95,6 +96,10 @@ class CheckoutController extends Controller
         // F-05: notifikasi pesanan baru ke nomor WhatsApp Admin/Owner.
         $order->load('details');
         $this->whatsapp->notifyNewOrder($order);
+
+        // Ingat kode pesanan ini di perangkat pelanggan, supaya nanti
+        // otomatis muncul di halaman Lacak Pesanan tanpa perlu isi ulang.
+        OrderDeviceMemory::remember($request, $order->order_code);
 
         return redirect()->route('checkout.success', $order->order_code);
     }

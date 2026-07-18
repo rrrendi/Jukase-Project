@@ -118,8 +118,10 @@ class CartController extends Controller
         $items = [];
         $subtotal = 0.0;
 
+        $products = Product::with('images')->whereIn('id', array_keys($cart))->get()->keyBy('id');
+
         foreach ($cart as $productId => $qty) {
-            $product = Product::find($productId);
+            $product = $products->get($productId);
 
             if (!$product || !$product->is_active || $product->stock <= 0) {
                 continue;

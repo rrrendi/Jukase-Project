@@ -20,7 +20,6 @@ class Product extends Model
         'avg_cost',
         'stock',
         'min_stock',
-        'image',
         'is_active',
     ];
 
@@ -94,38 +93,29 @@ class Product extends Model
     }
 
     /**
-     * URL foto produk, atau null jika belum ada foto (fallback ke
-     * placeholder ikon di Blade) (F-02).
+     * URL foto sampul produk: foto pertama (sort_order terkecil) di
+     * relasi images(), atau null jika produk belum punya foto sama
+     * sekali (fallback ke placeholder ikon di Blade) (F-02).
      */
     public function getImageUrlAttribute(): ?string
     {
-        if (!$this->image) {
+        $cover = $this->images->first();
+
+        if (!$cover) {
             return null;
         }
 
-        return Storage::disk('public')->exists($this->image)
-            ? Storage::url($this->image)
+        return Storage::disk('public')->exists($cover->path)
+            ? Storage::url($cover->path)
             : null;
     }
 
     /**
-     * Gabungan foto utama + galeri, untuk lightbox di katalog (F-02).
+     * Seluruh foto galeri, untuk lightbox di katalog (F-02).
      */
     public function getGalleryUrlsAttribute(): array
     {
-        $urls = [];
-
-        if ($this->image_url) {
-            $urls[] = $this->image_url;
-        }
-
-        foreach ($this->images as $img) {
-            if ($img->url) {
-                $urls[] = $img->url;
-            }
-        }
-
-        return $urls;
+        return $this->images->pluck('url')->filter()->values()->all();
     }
 
     /**

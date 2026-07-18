@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ConfigurationController;
+use App\Http\Controllers\Admin\NotificationLogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ManualSaleController;
 use App\Http\Controllers\Admin\OrderController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderTrackingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +42,7 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
 
 // Halaman sukses pesanan, dicari berdasarkan order_code (mis. JKS-2041).
 Route::get('/pesanan/{order:order_code}', [CheckoutController::class, 'success'])->name('checkout.success');
+Route::get('/lacak-pesanan', [OrderTrackingController::class, 'index'])->name('order-tracking.index');
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +98,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // F-15: Konfigurasi Sistem
     Route::get('/configuration', [ConfigurationController::class, 'edit'])->name('configuration.edit');
     Route::put('/configuration', [ConfigurationController::class, 'update'])->name('configuration.update');
+
+    // F-05/F-07: Riwayat Notifikasi WhatsApp (log kirim Fonnte)
+    Route::get('/notification-logs', [NotificationLogController::class, 'index'])->name('notification-logs.index');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -42,8 +42,8 @@ class StockInController extends Controller
         $validated = $request->validate([
             'product_id' => ['required', 'exists:products,id'],
             'supplier_id' => ['nullable', 'exists:suppliers,id'],
-            'quantity' => ['required', 'integer', 'min:1'],
-            'unit_cost' => ['required', 'numeric', 'min:0'],
+            'quantity' => ['required', 'integer', 'min:1', 'max:2000000000'],
+            'unit_cost' => ['required', 'numeric', 'min:0', 'max:9999999999.99'],
             'date' => ['required', 'date'],
         ], [], [
             'product_id' => 'Produk',
@@ -61,8 +61,8 @@ class StockInController extends Controller
 
         return redirect()->route('admin.stock-ins.index')->with(
             'success',
-            'Stok masuk dicatat. Stok '.$product->full_name.' kini '.$product->stock.
-                ', HPP baru '.Format::rupiah($product->avg_cost).' (Moving Average).'
+            'Stok masuk dicatat. Stok ' . $product->full_name . ' kini ' . $product->stock .
+            ', HPP baru ' . Format::rupiah($product->avg_cost) . ' (Moving Average).'
         );
     }
 }
