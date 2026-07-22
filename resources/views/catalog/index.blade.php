@@ -10,15 +10,17 @@
         <img src="{{ asset('images/sepatu.png') }}" alt="Sepatu">
     </div>
     <div class="hero-inner">
-        <div class="eyebrow tag">Reseller Sneakers · Margahayu, Bandung</div>
-        <h1>STOK <span class="out">REAL-TIME.</span> NO PHP.</h1>
+        <div class="eyebrow tag">Reseller Sneakers · Terpercaya Di Bandung</div>
+        <h1>STOK <span class="out">REAL-TIME. <br></span>100% ORIGINAL</h1>
         <p>Lihat ketersediaan tiap model langsung dari katalog. Pesan tanpa daftar akun, upload bukti bayar, beres. Konfirmasi otomatis lewat WhatsApp.</p>
     </div>
 </section>
 
 <div class="ticker"><div class="track">
-    <span>★ STOK REAL-TIME ★ GUEST CHECKOUT ★ QRIS &amp; TRANSFER ★ NOTIFIKASI WHATSAPP ★ ORI 100% ★&nbsp;&nbsp;</span>
-    <span>★ STOK REAL-TIME ★ GUEST CHECKOUT ★ QRIS &amp; TRANSFER ★ NOTIFIKASI WHATSAPP ★ ORI 100% ★&nbsp;&nbsp;</span>
+    <span>★ GUEST CHECKOUT ★ QRIS &amp; TRANSFER ★ NOTIFIKASI WHATSAPP ★ 100% AMAN & TERPERCAYA ★&nbsp;&nbsp;</span>
+    <span>★ GUEST CHECKOUT ★ QRIS &amp; TRANSFER ★ NOTIFIKASI WHATSAPP ★ 100% AMAN & TERPERCAYA ★&nbsp;&nbsp;</span>
+    <span>★ GUEST CHECKOUT ★ QRIS &amp; TRANSFER ★ NOTIFIKASI WHATSAPP ★ 100% AMAN & TERPERCAYA ★&nbsp;&nbsp;</span>
+    <span>★ GUEST CHECKOUT ★ QRIS &amp; TRANSFER ★ NOTIFIKASI WHATSAPP ★ 100% AMAN & TERPERCAYA ★&nbsp;&nbsp;</span>
 </div></div>
 
 <section class="catalog">

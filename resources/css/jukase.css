@@ -84,7 +84,7 @@
 .error-text{color:var(--danger);font-size:12px;font-weight:600;margin-top:5px;display:block}
 
 /* ============================================================= STOREFRONT */
-.shop-header{position:sticky;top:0;z-index:60;background:#dae0c4e6;backdrop-filter:blur(0px);border-bottom:1px solid var(--line-strong)}
+.shop-header{position:sticky;top:0;z-index:60;background:#e0c7c4e6;backdrop-filter:blur(0px);border-bottom:1px solid var(--line-strong)}
 .shop-header .bar{max-width:1180px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:28px;background:none;width:auto;min-height:0;position:static}.wordmark{font-family:var(--disp);font-weight:800;font-size:22px;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
 .wordmark .sq{width:26px;height:26px;background:var(--ink);border-radius:7px;display:grid;place-items:center}
 .wordmark .sq b{color:var(--volt);font-size:15px;font-family:var(--disp)}
