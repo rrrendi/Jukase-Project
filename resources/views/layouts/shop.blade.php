@@ -83,8 +83,8 @@
                 <span class="sq" style="background:var(--volt)"><b style="color:var(--ink)">J</b></span>
                 Jukase Project
             </div>
-            <div>Jl. Raya Taman Kopo Indah 2 No.12, Sayati, Margahayu, Kab. Bandung</div>
-            <div class="mono">© {{ date('Y') }} Jukase Project By Fijia</div>
+            <div>Gg. Pamoyanan, Wr. Muncang, Kec. Bandung Kulon, Kota Bandung, Jawa Barat 40211</div>
+            <div class="mono">© {{ date('Y') }} Jukase Project</div>
         </div>
     </footer>
 
